@@ -9,6 +9,8 @@ import { ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE,
         ,UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS, UPLOAD_IMAGES_FAILURE 
         ,RETWEET_REQUEST, RETWEET_SUCCESS, RETWEET_FAILURE
         ,LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE
+        ,LOAD_USER_POSTS_REQUEST, LOAD_USER_POSTS_SUCCESS, LOAD_USER_POSTS_FAILURE
+        ,LOAD_HASHTAG_POSTS_REQUEST,LOAD_HASHTAG_POSTS_SUCCESS,LOAD_HASHTAG_POSTS_FAILURE
         ,
          }
 from '../reducers/post';
@@ -119,7 +121,7 @@ function* loadPosts(action) {
 }
 
 function loadHashtagPostsAPI(data, lastId) {
-    return axios.get(`/hashtag/${data}?lastId=${lastId || 0}`);
+    return axios.get(`/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}`);
 }
 
 function* loadHashtagPosts(action) {
