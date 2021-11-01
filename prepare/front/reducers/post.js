@@ -3,11 +3,15 @@ import produce from 'immer';
 
 export const initalState = {
     mainPosts: [],
+    singlePost:null,
     imagePaths: [],
     hasMorePosts: true,
     loadPostsLoading: false,
     loadPostsDone: false,
     loadPostsError:null,
+    loadPostLoading: false,
+    loadPostDone: false,
+    loadPostError:null,
     addPostLoading: false,
     addPostDone: false,
     addPostError:null,
@@ -51,6 +55,18 @@ export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
+
+export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST';
+export const LOAD_USER_POSTS_SUCCESS = 'LOAD_USER_POSTS_SUCCESS';
+export const LOAD_USER_POSTS_FAILURE = 'LOAD_USER_POSTS_FAILURE';
+
+export const LOAD_HASHTAG_POSTS_REQUEST = 'LOAD_HASHTAG_POSTS_REQUEST';
+export const LOAD_HASHTAG_POSTS_SUCCESS = 'LOAD_HASHTAG_POSTS_SUCCESS';
+export const LOAD_HASHTAG_POSTS_FAILURE = 'LOAD_HASHTAG_POSTS_FAILURE';
+
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -127,20 +143,40 @@ const reducer = (state = initalState, action) => {
                     draft.unlikePostError = action.error;
                     draft.unlikePostLoading = false;
                 break;
+            case LOAD_HASHTAG_POSTS_REQUEST:
+            case LOAD_USER_POSTS_REQUEST:
             case LOAD_POSTS_REQUEST:
                     draft.loadPostsLoading = true;
                     draft.loadPostsDone = false;
                     draft.loadPostsError = null;
                     break;
+            case LOAD_HASHTAG_POSTS_SUCCESS:
+            case LOAD_USER_POSTS_SUCCESS:
             case LOAD_POSTS_SUCCESS:
                     draft.mainPosts = draft.mainPosts.concat(action.data);
                     draft.loadPostsDone = true;
                     draft.loadPostsLoading = false;
                     draft.hasMorePosts = action.data.length === 10;
                 break;
+            case LOAD_HASHTAG_POSTS_FAILURE:
+            case LOAD_USER_POSTS_FAILURE:
             case LOAD_POSTS_FAILURE:
                     draft.loadPostsError = action.error;
                     draft.loadPostsLoading = false;
+                break;
+            case LOAD_POST_REQUEST:
+                    draft.loadPostLoading = true;
+                    draft.loadPostDone = false;
+                    draft.loadPostError = null;
+                    break;
+            case LOAD_POST_SUCCESS:
+                    draft.singlePost = action.data;
+                    draft.loadPostDone = true;
+                    draft.loadPostLoading = false;
+                break;
+            case LOAD_POST_FAILURE:
+                    draft.loadPostError = action.error;
+                    draft.loadPostLoading = false;
                 break;
             case ADD_POST_REQUEST:
                     draft.addPostLoading = true;

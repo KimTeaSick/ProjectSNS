@@ -61,7 +61,7 @@ const AppLayout = ({ children })=>{
                     {children}
                 </Col>
                 <Col xs={24} md={ 6} >
-                    <a href="https://www.naver.com" target="_blank" rel="noreferrer nopener">Made bt Jo</a>
+                    <a href="https://www.naver.com" target="_blank" rel="noreferrer nopener">Made by JoSef</a>
                 </Col>
             </Row>
         </div>
