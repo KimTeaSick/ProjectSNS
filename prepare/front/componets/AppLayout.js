@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Menu, Input, Row, Col } from 'antd';
-import { Children, useState } from 'react';
+import { Children, useCallback, useState } from 'react';
 import UserProfile from '../componets/UserProfile';
 import SignIn from '../componets/LoginForm';
 import LoginForm from '../componets/LoginForm';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
+import useInput from '../hooks/useinput';
+import  Router  from 'next/router';
 
 const Global = createGlobalStyle`
  .ant-row{
@@ -30,8 +32,13 @@ const SearchInput = styled(Input.Search)`
 // xs : mobile sm : tablet md: mini desktop lg, xl : big display
 
 const AppLayout = ({ children })=>{
-
+    const [searchInput, onChangeSearchInput] = useInput('');
+    
     const { me } = useSelector((state) => state.user);
+
+    const onSearch = useCallback(()=>{
+        Router.push(`/hashtag/${searchInput}`);
+    },[searchInput])
 
     return(
         <div>
@@ -44,7 +51,12 @@ const AppLayout = ({ children })=>{
                     <Link href="/profile"><a>프로필</a></Link>
                 </Menu.Item>
                 <Menu.Item>
-                    <SearchInput enterButton/>
+                    <SearchInput 
+                    enterButton
+                    value={searchInput}
+                    onChange={onChangeSearchInput}
+                    onSearch={onSearch}
+                    />
                 </Menu.Item>
                 <Menu.Item>
                     <Link href="/signup"><a>회원가입</a></Link>

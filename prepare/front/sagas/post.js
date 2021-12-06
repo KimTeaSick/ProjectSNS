@@ -146,7 +146,7 @@ function loadUserPostsAPI(data, lastId) {
 
 function* loadUserPosts(action) {
     try{
-        const result = yield call(loadUserPostsAPI,actiondata, action.lastId);
+        const result = yield call(loadUserPostsAPI,action.data, action.lastId);
         yield put({
             type: LOAD_USER_POSTS_SUCCESS,
             data: result.data,

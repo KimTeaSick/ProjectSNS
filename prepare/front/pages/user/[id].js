@@ -8,9 +8,9 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { LOAD_USER_POSTS_REQUEST } from '../../reducers/post';
 import { LOAD_MY_INFO_REQUEST, LOAD_USER_REQUEST } from '../../reducers/user';
-import PostCard from '../../components/PostCard';
+import PostCard from '../../componets/PostCard';
 import wrapper from '../../store/configureStore';
-import AppLayout from '../../components/AppLayout';
+import AppLayout from '../../componets/AppLayout';
 
 const User = () => {
   const dispatch = useDispatch();
@@ -48,8 +48,7 @@ const User = () => {
           <meta name="description" content={`${userInfo.nickname}님의 게시글`} />
           <meta property="og:title" content={`${userInfo.nickname}님의 게시글`} />
           <meta property="og:description" content={`${userInfo.nickname}님의 게시글`} />
-          <meta property="og:image" content="https://nodebird.com/favicon.ico" />
-          <meta property="og:url" content={`https://nodebird.com/user/${id}`} />
+          <meta property="og:url" content={`http:/localhost:3060/user/${id}`} />
         </Head>
       )}
       {userInfo && (userInfo.id !== me?.id)
