@@ -166,6 +166,7 @@ function* logIn(action) {
     });
   }
 }
+//3
 
 function logOutAPI() {
   return axios.post('/user/logout');
