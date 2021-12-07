@@ -22,7 +22,14 @@ db.sequelize.sync()
   .catch(console.error);
 passportConfig();
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+
+} else {
+  app.use(morgan('dev'));
+  
+}
+
 app.use(cors({
   origin: 'http://localhost:3060',
   credentials: true,
