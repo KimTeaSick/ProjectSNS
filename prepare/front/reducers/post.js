@@ -1,38 +1,37 @@
 import produce from 'immer';
 
-
 export const initalState = {
     mainPosts: [],
-    singlePost:null,
+    singlePost: null,
     imagePaths: [],
     hasMorePosts: true,
     loadPostsLoading: false,
     loadPostsDone: false,
-    loadPostsError:null,
+    loadPostsError: null,
     loadPostLoading: false,
     loadPostDone: false,
-    loadPostError:null,
+    loadPostError: null,
     addPostLoading: false,
     addPostDone: false,
-    addPostError:null,
+    addPostError: null,
     addCommentLoading: false,
     addCommentDone: false,
-    addCommentError:null,
+    addCommentError: null,
     removePostLoading: false,
     removePostDone: false,
-    removePostError:null,
+    removePostError: null,
     likePostLoading: false,
     likePostDone: false,
-    likePostError:null,
+    likePostError: null,
     unlikePostLoading: false,
     unlikePostDone: false,
-    unlikePostError:null,
+    unlikePostError: null,
     uploadImagesLoading: false,
     uploadImagesDone: false,
-    uploadImagesError:null,
+    uploadImagesError: null,
     retweetLoading: false,
     retweetDone: false,
-    retweetError:null,
+    retweetError: null,
 }
 
 
@@ -97,137 +96,140 @@ const reducer = (state = initalState, action) => {
     return produce(state, (draft) => {
         switch (action.type) {
             case UPLOAD_IMAGES_REQUEST:
-                    draft.uploadImagesLoading = true;
-                    draft.uploadImagesDone = false;
-                    draft.uploadImagesError = null;
+                draft.uploadImagesLoading = true;
+                draft.uploadImagesDone = false;
+                draft.uploadImagesError = null;
                 break;
             case UPLOAD_IMAGES_SUCCESS: {
-                    draft.imagePaths = action.data;
-                    draft.uploadImagesDone = true;
-                    draft.uploadImagesLoading = false;
-                break;}
-            case UPLOAD_IMAGES_FAILURE:
-                    draft.uploadImagesError = action.error;
-                    draft.uploadImagesLoading = false;
+                draft.imagePaths = action.data;
+                draft.uploadImagesDone = true;
+                draft.uploadImagesLoading = false;
                 break;
-            case REMOVE_IMAGE :
-                    draft.imagePaths = draft.imagePaths.filter(( v, i )=> i !== action.data);
+            }
+            case UPLOAD_IMAGES_FAILURE:
+                draft.uploadImagesError = action.error;
+                draft.uploadImagesLoading = false;
+                break;
+            case REMOVE_IMAGE:
+                draft.imagePaths = draft.imagePaths.filter((v, i) => i !== action.data);
                 break;
             case LIKE_POST_REQUEST:
-                    draft.likePostLoading = true;
-                    draft.likePostDone = false;
-                    draft.likePostError = null;
+                draft.likePostLoading = true;
+                draft.likePostDone = false;
+                draft.likePostError = null;
                 break;
             case LIKE_POST_SUCCESS: {
-                    const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
-                    post.Likers.push({ id: action.data.UserId });
-                    draft.likePostDone = true;
-                    draft.likePostLoading = false;
-                break;}
+                const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+                post.Likers.push({ id: action.data.UserId });
+                draft.likePostDone = true;
+                draft.likePostLoading = false;
+                break;
+            }
             case LIKE_POST_FAILURE:
-                    draft.likePostError = action.error;
-                    draft.likePostLoading = false;
+                draft.likePostError = action.error;
+                draft.likePostLoading = false;
                 break;
             case UNLIKE_POST_REQUEST:
-                    draft.unlikePostLoading = true;
-                    draft.unlikePostDone = false;
-                    draft.unlikePostError = null;
+                draft.unlikePostLoading = true;
+                draft.unlikePostDone = false;
+                draft.unlikePostError = null;
                 break;
             case UNLIKE_POST_SUCCESS: {
-                    const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
-                    post.Likers = post.Likers.filter((v) => v.id !== action.data.PostId);
-                    draft.unlikePostDone = true;
-                    draft.unlikePostLoading = false;
-                break; }
+                const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+                post.Likers = post.Likers.filter((v) => v.id !== action.data.PostId);
+                draft.unlikePostDone = true;
+                draft.unlikePostLoading = false;
+                break;
+            }
             case UNLIKE_POST_FAILURE:
-                    draft.unlikePostError = action.error;
-                    draft.unlikePostLoading = false;
+                draft.unlikePostError = action.error;
+                draft.unlikePostLoading = false;
                 break;
             case LOAD_HASHTAG_POSTS_REQUEST:
             case LOAD_USER_POSTS_REQUEST:
             case LOAD_POSTS_REQUEST:
-                    draft.loadPostsLoading = true;
-                    draft.loadPostsDone = false;
-                    draft.loadPostsError = null;
-                    break;
+                draft.loadPostsLoading = true;
+                draft.loadPostsDone = false;
+                draft.loadPostsError = null;
+                break;
             case LOAD_HASHTAG_POSTS_SUCCESS:
             case LOAD_USER_POSTS_SUCCESS:
             case LOAD_POSTS_SUCCESS:
-                    draft.mainPosts = draft.mainPosts.concat(action.data);
-                    draft.loadPostsDone = true;
-                    draft.loadPostsLoading = false;
-                    draft.hasMorePosts = action.data.length === 10;
+                draft.mainPosts = draft.mainPosts.concat(action.data);
+                draft.loadPostsDone = true;
+                draft.loadPostsLoading = false;
+                draft.hasMorePosts = action.data.length === 10;
                 break;
             case LOAD_HASHTAG_POSTS_FAILURE:
             case LOAD_USER_POSTS_FAILURE:
             case LOAD_POSTS_FAILURE:
-                    draft.loadPostsError = action.error;
-                    draft.loadPostsLoading = false;
+                draft.loadPostsError = action.error;
+                draft.loadPostsLoading = false;
                 break;
             case LOAD_POST_REQUEST:
-                    draft.loadPostLoading = true;
-                    draft.loadPostDone = false;
-                    draft.loadPostError = null;
-                    break;
+                draft.loadPostLoading = true;
+                draft.loadPostDone = false;
+                draft.loadPostError = null;
+                break;
             case LOAD_POST_SUCCESS:
-                    draft.singlePost = action.data;
-                    draft.loadPostDone = true;
-                    draft.loadPostLoading = false;
+                draft.singlePost = action.data;
+                draft.loadPostDone = true;
+                draft.loadPostLoading = false;
                 break;
             case LOAD_POST_FAILURE:
-                    draft.loadPostError = action.error;
-                    draft.loadPostLoading = false;
+                draft.loadPostError = action.error;
+                draft.loadPostLoading = false;
                 break;
             case ADD_POST_REQUEST:
-                    draft.addPostLoading = true;
-                    draft.addPostDone = false;
-                    draft.addPostError = null;
-                    break;
+                draft.addPostLoading = true;
+                draft.addPostDone = false;
+                draft.addPostError = null;
+                break;
             case ADD_POST_SUCCESS:
-                    draft.mainPosts.unshift(action.data);
-                    draft.imagePaths = [];
-                    draft.addPostDone = true;
-                    draft.addPostLoading = false;
+                draft.mainPosts.unshift(action.data);
+                draft.imagePaths = [];
+                draft.addPostDone = true;
+                draft.addPostLoading = false;
                 break;
             case ADD_POST_FAILURE:
-                    draft.addPostError = action.error;
-                    draft.addPostLoading = true;
+                draft.addPostError = action.error;
+                draft.addPostLoading = true;
                 break;
             case REMOVE_POST_REQUEST:
-                    draft.removePostLoading = true;
-                    draft.removePostDone=false;
-                    draft.removePostError=null;
+                draft.removePostLoading = true;
+                draft.removePostDone = false;
+                draft.removePostError = null;
                 break;
             case REMOVE_POST_SUCCESS:
-                    draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data.postId);
-                    draft.removePostDone = true;
-                    draft.removePostLoading = false;
+                draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data.postId);
+                draft.removePostDone = true;
+                draft.removePostLoading = false;
                 break;
             case REMOVE_POST_FAILURE:
-                    draft.removePostError = action.error;
-                    draft.removePostLoading = false;
+                draft.removePostError = action.error;
+                draft.removePostLoading = false;
                 break;
             case RETWEET_REQUEST:
-                    draft.retweetLoading = true;
-                    draft.retweetDone = false;
-                    draft.retweetError = null;
+                draft.retweetLoading = true;
+                draft.retweetDone = false;
+                draft.retweetError = null;
                 break;
             case RETWEET_SUCCESS:
-                    draft.mainPosts.unshift(action.data);
-                    draft.retweetDone = true;
-                    draft.retweetLoading = false;
+                draft.mainPosts.unshift(action.data);
+                draft.retweetDone = true;
+                draft.retweetLoading = false;
                 break;
             case RETWEET_FAILURE:
-                    draft.retweetError = action.error;
-                    draft.retweetLoading = true;
+                draft.retweetError = action.error;
+                draft.retweetLoading = true;
                 break;
             case ADD_COMMENT_REQUEST:
-                    draft.addCommentLoading = true;
-                    draft.addCommentDone = false;
-                    draft.addCommentError = null;
+                draft.addCommentLoading = true;
+                draft.addCommentDone = false;
+                draft.addCommentError = null;
                 break;
-            case ADD_COMMENT_SUCCESS:{
-                const post = draft.mainPosts.find((v)=> v.id === action.postId);
+            case ADD_COMMENT_SUCCESS: {
+                const post = draft.mainPosts.find((v) => v.id === action.postId);
                 post.Comments.unshift(action.data.content);
                 draft.addCommentDone = true;
                 draft.addCommentLoading = false;
@@ -245,15 +247,15 @@ const reducer = (state = initalState, action) => {
                 // };
             }
             case ADD_COMMENT_FAILURE:
-                    draft.addCommentError = action.error;
-                    draft.addCommentLoading = false;
+                draft.addCommentError = action.error;
+                draft.addCommentLoading = false;
                 break;
             default:
                 break;
         }
     });
 
-    
+
 };
 
 export default reducer;

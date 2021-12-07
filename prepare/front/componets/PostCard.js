@@ -17,6 +17,7 @@ import FollowButton from './FollowButton';
 moment.locale('ko');
 
 const PostCard = ({ post }) => {
+
   const dispatch = useDispatch();
   const { removePostLoading } = useSelector((state) => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
@@ -65,6 +66,7 @@ const PostCard = ({ post }) => {
   }, [id]);
 
   const liked = post.Likers.find((v) => v.id === id);
+  console.log(post)
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
@@ -77,18 +79,18 @@ const PostCard = ({ post }) => {
           <MessageOutlined key="comment" onClick={onToggleComment} />,
           <Popover
             key="more"
-            content={(
-              <Button.Group>
-                {id && post.User.id === id
-                  ? (
-                    <>
-                      <Button>수정</Button>
-                      <Button type="danger" loading={removePostLoading} onClick={onRemovePost}>삭제</Button>
-                    </>
-                  )
-                  : <Button>신고</Button>}
-              </Button.Group>
-            )}
+            // content={(
+            //   <Button.Group>
+            //     {id && post.User.id === id
+            //       ? (
+            //         <>
+            //           <Button>수정</Button>
+            //           <Button type="danger" loading={removePostLoading} onClick={onRemovePost}>삭제</Button>
+            //         </>
+            //       )
+            //       : <Button>신고</Button>}
+            //   </Button.Group>
+            // )}
           >
             <EllipsisOutlined />
           </Popover>,
