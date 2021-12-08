@@ -31,7 +31,7 @@
     "shortid": "^2.2.16",
     "styled-components": "^5.3.1",
     "swr": "^1.1.0",
-    "webpack": "^4.28.4"
+    "webpack": "^4.28.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
