@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(cors({
-  origin: ['http://localhost:3060', 'traverd.com'],
+  origin: ['http://localhost:3060', 'traverd.com', 'http://3.38.99.39'],
   credentials: true,
 }));
 
